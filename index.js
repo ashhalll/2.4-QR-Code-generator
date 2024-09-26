@@ -1,13 +1,17 @@
 import inquirer from "inquirer";
+import qr from "qr-image";
+import fs from "fs";
 
 inquirer
   .prompt([{
     message: "Type in ur URL: ",
-    name: URL.name
+    name: "URL"
   }
 ])
 .then((answers) => {
   const url = answers.url;
+  var qr_svg = qr.image(url);
+  qr_svg.pipe(require('fs').createWriteStream('qr_img.png')); 
 })
 .catch((error) => {
   if (error.isTtyError) {
